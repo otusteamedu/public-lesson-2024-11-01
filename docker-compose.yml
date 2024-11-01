@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  php-cli:
+    build: docker
+    container_name: 'php'
+    volumes:
+      - ./:/app
+    working_dir: /app
+
+  postgres:
+    image: postgres:15
+    ports:
+      - 15432:5432
+    container_name: 'postgresql'
+    working_dir: /app
+    restart: always
+    environment:
+      POSTGRES_DB: 'twitter'
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'password'
+    volumes:
+      - dump:/app/dump
+      - postgresql:/var/lib/postgresql/data
+
+volumes:
+  dump:
+  postgresql:
